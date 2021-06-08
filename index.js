@@ -23,10 +23,17 @@ client.connect(err => {
     const productCollection = client.db("food-corner").collection("products");
     
     app.get('/products', (req, res) => {
-        productCollection.find()
+        productCollection.find({})
         .toArray((err, items) => {
             res.send(items);
         })
+    })
+
+    app.get('/product/:id', (req, res) => {
+        productCollection.find({_id: ObjectId(req.params.id)})
+            .toArray((err, items) => {
+                res.send(items[0]);
+            })
     })
 
 
